@@ -50,13 +50,11 @@ public class AccountController {
         }
         return ResponseEntity.ok(response); //返回JSON响应
     }
-
-/*html:
-    register:注册页
-    login：登录页
-    failure：登录失败
-    myPage：登录后进入个人主页
- */
-
-
 }
+
+
+
+
+
+
+
