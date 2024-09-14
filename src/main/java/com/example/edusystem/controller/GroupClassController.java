@@ -3,10 +3,7 @@ package com.example.edusystem.controller;
 import com.example.edusystem.dto.GroupClass;
 import com.example.edusystem.service.GroupClassService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,5 +20,12 @@ public class GroupClassController {
     @GetMapping("/class/recent/{studentNumber}")
     public List<GroupClass> getClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
         return groupClassService.getRecentClassByStudentNumber(studentNumber);
+    }
+
+
+    @PostMapping("/groupClass")
+    public GroupClass postGroupClass(@RequestBody GroupClass groupClass) {
+        groupClassService.saveGroupClass(groupClass);
+        return groupClass;
     }
 }

@@ -1,14 +1,21 @@
 package com.example.edusystem.dto;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
 
+@Entity
 public class GroupClass {
 
     /**
      * 课程类的ID
      */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     /**
@@ -82,6 +89,7 @@ public class GroupClass {
      */
     public int totalSeats;
 
+
     /**
      * 初始课时
      * 根据courseCategory分配
@@ -100,13 +108,8 @@ public class GroupClass {
      */
     public double availableCourseNum;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+//    public Long getId() { return id;}
+//    public void setId(Long id) { this.id = id;}
 
     @NonNull
     public CourseCategory getCourseCategory() {
