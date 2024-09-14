@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设置课程</title>
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api/groupClass'; // 替换为你的API URL
+
+        function addCourse() {
+            // 获取表单数据
+            const courseCategory = document.getElementById('courseCategory').value;
+            const groupClassType = document.getElementById('groupClassType').value;
+            const className = document.getElementById('className').value;
+            const baseClassName = document.getElementById('baseClassName').value;
+            const classMode = document.getElementById('classMode').value;
+            const classStartDate = document.getElementById('classStartDate').value;
+            const classStartDateOfWeek = document.getElementById('classStartDateOfWeek').value;
+            const classStartTime = document.getElementById('classStartTime').value;
+            const classEndTime = document.getElementById('classEndTime').value;
+            const classLanguage = document.getElementById('classLanguage').value;
+            const totalSeats = document.getElementById('totalSeats').value;
+
+            // 发送POST请求
+            fetch(API_BASE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    courseCategory,
+                    groupClassType,
+                    className,
+                    baseClassName,
+                    classMode,
+                    classStartDate,
+                    classStartDateOfWeek,
+                    classStartTime,
+                    classEndTime,
+                    classLanguage,
+                    totalSeats
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // 清空表单
+                document.getElementById('courseForm').reset();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+
+<h2>设置课程</h2>
+
+<form id="courseForm">
+    <label for="courseCategory">课程类别:</label>
+    <input type="text" id="courseCategory" name="courseCategory"><br><br>
+
+    <label for="groupClassType">班级类型:</label>
+    <input type="text" id="groupClassType" name="groupClassType"><br><br>
+
+    <label for="className">课程名称:</label>
+    <input type="text" id="className" name="className"><br><br>
+
+    <label for="baseClassName">基础课程名称:</label>
+    <input type="text" id="baseClassName" name="baseClassName"><br><br>
+
+    <label for="classMode">授课模式:</label>
+    <input type="text" id="classMode" name="classMode"><br><br>
+
+    <label for="classStartDate">开始日期:</label>
+    <input type="date" id="classStartDate" name="classStartDate"><br><br>
+
+    <label for="classStartDateOfWeek">每周开始日期:</label>
+    <input type="text" id="classStartDateOfWeek" name="classStartDateOfWeek"><br><br>
+
+    <label for="classStartTime">开始时间:</label>
+    <input type="time" id="classStartTime" name="classStartTime"><br><br>
+
+    <label for="classEndTime">结束时间:</label>
+    <input type="time" id="classEndTime" name="classEndTime"><br><br>
+
+    <label for="classLanguage">语言:</label>
+    <input type="text" id="classLanguage" name="classLanguage"><br><br>
+
+    <label for="totalSeats">总座位数:</label>
+    <input type="number" id="totalSeats" name="totalSeats"><br><br>
+
+    <button type="button" onclick="addCourse()">添加课程</button>
+</form>
+
+</body>
+</html>
