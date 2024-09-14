@@ -1,13 +1,51 @@
 package com.example.edusystem.service;
 
 import com.example.edusystem.dao.GroupClassDao;
+import com.example.edusystem.dto.GroupClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 
 @Service
 public class GroupClassService {
     @Autowired
     GroupClassDao groupClassDao;
+
+    public List<GroupClass> getRecentClassByStudentNumber(String studentNumber){
+        List<GroupClass> allCourseByStudent = getAllCourseByStudent(studentNumber);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate now = LocalDate.now();
+        // 过滤出今天的课程
+        List<GroupClass> todayClasses = allCourseByStudent.stream()
+                .filter(groupClass -> LocalDate.parse(groupClass.getClassStartDate(), formatter).isEqual(now))
+                .toList();
+        // 如果今天有课程，返回今天的所有课程
+        if (!todayClasses.isEmpty()) {
+            return todayClasses;
+        }
+        // 如果今天没有课程，按日期升序排序，返回最近一天的所有课程
+        LocalDate nearestDate = allCourseByStudent.stream()
+                .map(groupClass -> LocalDate.parse(groupClass.getClassStartDate(), formatter))
+                .filter(date -> date.isAfter(now))
+                .min(LocalDate::compareTo)
+                .orElse(null);
+
+        if (nearestDate != null) {
+            return allCourseByStudent.stream()
+                    .filter(groupClass -> LocalDate.parse(groupClass.getClassStartDate(), formatter).isEqual(nearestDate))
+                    .toList();
+        }
+
+        return List.of();
+    }
+
+    private List<GroupClass> getAllCourseByStudent(String studentNumber){
+        return groupClassDao.findByStudentNumberIn(List.of(studentNumber));
+    }
 
 }
 
