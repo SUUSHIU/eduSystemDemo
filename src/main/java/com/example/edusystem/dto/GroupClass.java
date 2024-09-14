@@ -74,7 +74,7 @@ public class GroupClass {
      * 报名班课的学生名单
      * 存储参加该班课的所有accountId
      */
-    public List<String> accountIdList;
+    public List<String> studentNumberList;
 
     /**
      * 定员数
@@ -99,5 +99,134 @@ public class GroupClass {
      * 初始课时-已使用课时
      */
     public double availableCourseNum;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @NonNull
+    public CourseCategory getCourseCategory() {
+        return courseCategory;
+    }
+
+    public void setCourseCategory(@NonNull CourseCategory courseCategory) {
+        this.courseCategory = courseCategory;
+    }
+
+    public GroupClassType getGroupClassType() {
+        return groupClassType;
+    }
+
+    public void setGroupClassType(GroupClassType groupClassType) {
+        this.groupClassType = groupClassType;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getBaseClassName() {
+        return baseClassName;
+    }
+
+    public void setBaseClassName(String baseClassName) {
+        this.baseClassName = baseClassName;
+    }
+
+    public boolean isClassMode() {
+        return classMode;
+    }
+
+    public void setClassMode(boolean classMode) {
+        this.classMode = classMode;
+    }
+
+    public String getClassStartDate() {
+        return classStartDate;
+    }
+
+    public void setClassStartDate(String classStartDate) {
+        this.classStartDate = classStartDate;
+    }
+
+    public String getClassStartDateOfWeek() {
+        return classStartDateOfWeek;
+    }
+
+    public void setClassStartDateOfWeek(String classStartDateOfWeek) {
+        this.classStartDateOfWeek = classStartDateOfWeek;
+    }
+
+    public String getClassStartTime() {
+        return classStartTime;
+    }
+
+    public void setClassStartTime(String classStartTime) {
+        this.classStartTime = classStartTime;
+    }
+
+    public String getClassEndTime() {
+        return classEndTime;
+    }
+
+    public void setClassEndTime(String classEndTime) {
+        this.classEndTime = classEndTime;
+    }
+
+    public String getClassLanguage() {
+        return classLanguage;
+    }
+
+    public void setClassLanguage(String classLanguage) {
+        this.classLanguage = classLanguage;
+    }
+
+    public List<String> getStudentNumberList() {
+        return studentNumberList;
+    }
+
+    public void setStudentNumberList(List<String> studentNumberList) {
+        this.studentNumberList = studentNumberList;
+    }
+
+    public int getTotalSeats() {
+        return totalSeats;
+    }
+
+    public void setTotalSeats(int totalSeats) {
+        this.totalSeats = totalSeats;
+    }
+
+    public double getCourseNumber() {
+        return courseNumber;
+    }
+
+    public void setCourseNumber(double courseNumber) {
+        this.courseNumber = courseNumber;
+    }
+
+    public double getUsedClassNum() {
+        return usedClassNum;
+    }
+
+    public void setUsedClassNum(double usedClassNum) {
+        this.usedClassNum = usedClassNum;
+    }
+
+    public double getAvailableCourseNum() {
+        return availableCourseNum;
+    }
+
+    public void setAvailableCourseNum(double availableCourseNum) {
+        this.availableCourseNum = availableCourseNum;
+    }
 
 }
