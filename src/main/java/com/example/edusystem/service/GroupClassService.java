@@ -51,11 +51,12 @@ public class GroupClassService {
 
 
 /*
+SELECT
 studentNumber -> getAll baseClassName ;
 
 ①最近上课提醒(RecentClass remind)
 如果同一天则显示两节课
-List<String> recentClass = (LocalDateTime - baseClassName.classStartDate).sort() { return min; }
+List<GroupClass> recentClass = (LocalDateTime - baseClassName.classStartDate).sort() { return min; }
 get Mode/DateOfWeek/StartTime/EndTime...
 
 ②未上课的课程（upcomingClass）
@@ -63,6 +64,7 @@ List<String> upcomingClass = new ArrayList<>();
     for()//过一遍所有课
         if(LocalDateTime < baseClassName.classStartDate) {
             upcomingClass.add(baseClassName);
+            }
 
 ③已结束的课程（finishedClass）
 List<String> finishedClass = new ArrayList<>();
