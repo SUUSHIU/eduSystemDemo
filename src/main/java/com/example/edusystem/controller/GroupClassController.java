@@ -18,14 +18,23 @@ public class GroupClassController {
 
     //想通过memberId，查到对应的class
     @GetMapping("/class/recent/{studentNumber}")
-    public List<GroupClass> getClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
+    public List<GroupClass> getRecentClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
         return groupClassService.getRecentClassByStudentNumber(studentNumber);
+    }
+
+    @GetMapping("/class/finish/{studentNumber}")
+    public List<GroupClass> getFinishClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
+        return groupClassService.getFinishedClassByStudentNumber(studentNumber);
+    }
+
+    @GetMapping("/class/close/{studentNumber}")
+    public List<GroupClass> getCloseClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
+        return groupClassService.getUpComingClassByStudentNumber(studentNumber);
     }
 
 
     @PostMapping("/groupClass")
-    public GroupClass postGroupClass(@RequestBody GroupClass groupClass) {
+    public void postGroupClass(@RequestBody GroupClass groupClass) {
         groupClassService.saveGroupClass(groupClass);
-        return groupClass;
     }
 }
