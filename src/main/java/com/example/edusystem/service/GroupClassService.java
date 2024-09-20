@@ -61,12 +61,11 @@ public class GroupClassService {
         LocalDate now = LocalDate.now();
 
         //过滤出日期比今天晚的，并返回所有课程
-        List<GroupClass> upComingClasses = allClassByStudent.stream()
+        return  allClassByStudent.stream()
                 .filter(groupClass -> LocalDate.parse(groupClass.getClassStartDate(), formatter).isAfter(now))
                 .sorted(Comparator.comparing(GroupClass::getClassStartDate))
                 .toList();
 
-        return List.of((GroupClass) upComingClasses); //强转
     }
 
 
@@ -82,13 +81,19 @@ public class GroupClassService {
                 .sorted(Comparator.comparing(GroupClass::getClassStartDate))
                 .toList();
 
-//        return List.of((GroupClass) finishedClasses);
     }
 
 
     //这个学生选的所有课
-    private List<GroupClass> getAllClassByStudent(String studentNumber) {
-        return groupClassDao.findByStudentNumberListIn(List.of(studentNumber));
+    public List<GroupClass> getAllClassByStudent(String studentNumber) {
+        List<GroupClass> allGroupClasses = groupClassDao.findAll();
+
+        return allGroupClasses.stream()
+                .filter(gc -> {
+                    List<String> studentList = gc.getStudentNumberList();
+                    return studentList != null && studentList.contains(studentNumber);
+                })
+                .toList();
     }
 }
 

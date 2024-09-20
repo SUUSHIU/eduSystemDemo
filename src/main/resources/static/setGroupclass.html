@@ -20,6 +20,7 @@
             const classEndTime = document.getElementById('classEndTime').value;
             const classLanguage = document.getElementById('classLanguage').value;
             const totalSeats = document.getElementById('totalSeats').value;
+            const studentNumberList = document.getElementById('studentNumberList').value.split(','); // 将字符串按逗号分割为数组
 
             // 发送POST请求
             fetch(API_BASE_URL, {
@@ -36,7 +37,8 @@
                     classStartTime,
                     classEndTime,
                     classLanguage,
-                    totalSeats
+                    totalSeats,
+                    studentNumberList
                 })
             })
             .then(response => response.json())
@@ -88,6 +90,9 @@
 
     <label for="totalSeats">总座位数:</label>
     <input type="number" id="totalSeats" name="totalSeats"><br><br>
+
+    <label for="studentNumberList">学生编号 (用逗号分隔):</label>
+    <input type="text" id="studentNumberList" name="studentNumberList"><br><br>
 
     <button type="button" onclick="addCourse()">添加课程</button>
 </form>

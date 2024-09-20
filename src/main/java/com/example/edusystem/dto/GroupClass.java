@@ -1,9 +1,6 @@
 package com.example.edusystem.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
@@ -79,7 +76,8 @@ public class GroupClass {
 
     /**
      * 报名班课的学生名单
-     * 存储参加该班课的所有accountId
+     * 存储参加该班课的所有studentNumber
+     * 使用基础集合的注解
      */
     public List<String> studentNumberList;
 
