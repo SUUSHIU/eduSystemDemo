@@ -2,9 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shang Yi Studio - Login</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .login-btn, .register-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .login-btn:hover, .register-btn:hover {
+            background-color: #45a049;
+        }
+
+        .alert {
+            display: none;
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <div class="logo">
+        <img src="images/logo.png" alt="Shang Yi Studio Logo">
+    </div>
+
+    <h2>Login</h2>
+
+    <div class="input-box">
+        <input type="text" id="studentNumber" placeholder="学号">
+    </div>
+
+    <div class="input-box">
+        <input type="password" id="password" placeholder="密码">
+    </div>
+
+    <button class="login-btn" onclick="login()">登录</button>
+
+    <div class="alert" id="login-alert">登录失败，请确认学号和密码.</div>
+
+    <div class="register-link">
+        <a href="register.html">去注册</a>
+    </div>
+
+</div>
+
+<script>
+    function login() {
+        var userId = document.getElementById("studentNumber").value;
+        var password = document.getElementById("password").value;
+
+        //创建一个JSON对象，发送到后端
+        var loginData ={
+            studentNumber: userId,
+            password: password
+        };
+
+        //使用fetch发送登录请求到后端
+        fetch（"/api/login", {
+            method:"POST",
+            headers: {
+                    "Content-Type": "application/json"
+            },
+            body: JSON.stringify(loginData)
+            })
+        .then(response => {
+            if (response.ok) {
+                return response.text(); // 如果成功，获取后端返回的信息
+            } else {
+                throw new Error("登录失败");
+            }
+        })
+        .then(result => {
+            alert(result); // 登录成功，显示成功信息
+            // Redirect to login page after registration
+            window.location.href = "myPage.html";
+
+        })
+        .catch(error => {
+            document.getElementById("login-alert").style.display = "block"; // 显示错误消息
+        });
+    }
+</script>
 </body>
 </html>
+
+

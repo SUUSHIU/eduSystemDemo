@@ -80,10 +80,7 @@ public class GroupClassService {
                 .filter(groupClass -> LocalDate.parse(groupClass.getClassStartDate(), formatter).isBefore(now))
                 .sorted(Comparator.comparing(GroupClass::getClassStartDate))
                 .toList();
-
     }
-
-
     //这个学生选的所有课
     public List<GroupClass> getAllClassByStudent(String studentNumber) {
         List<GroupClass> allGroupClasses = groupClassDao.findAll();
@@ -97,3 +94,4 @@ public class GroupClassService {
     }
 }
 
+//注册 - 登录 - 创建学生， 同时创建个人信息

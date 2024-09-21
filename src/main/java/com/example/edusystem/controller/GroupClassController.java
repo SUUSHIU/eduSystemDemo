@@ -16,7 +16,7 @@ public class GroupClassController {
     GroupClassService groupClassService;
 
 
-    //想通过memberId，查到对应的class
+    //通过memberId，查到对应的class
     @GetMapping("/class/recent/{studentNumber}")
     public List<GroupClass> getRecentClassByStudentNumber(@PathVariable("studentNumber") String studentNumber) {
         return groupClassService.getRecentClassByStudentNumber(studentNumber);

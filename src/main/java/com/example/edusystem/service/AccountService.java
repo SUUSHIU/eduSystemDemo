@@ -2,6 +2,7 @@ package com.example.edusystem.service;
 
 import com.example.edusystem.dao.AccountDao;
 import com.example.edusystem.dto.Account;
+import com.example.edusystem.dto.CourseCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,31 +13,30 @@ public class AccountService {
     @Autowired
     AccountDao accountDao;
 
-    //功能
-    //注册--登录
-    public boolean checkRegister(String name, String password) {
-        if (name.isEmpty() || password.isEmpty()) {
-            return false;
+    //注册
+    public boolean checkRegister(String studentNumber, String password) {
+        if (studentNumber.isEmpty() || password.isEmpty()) {
+            return false; //如果注册信息为空，返回失败
+        }  else if (accountDao.existsByStudentNumber(studentNumber)){
+            return false; // 如果注册信息已存在，返回失败
+        } else {
+            return true;
         }
-
-        List<Account> accountList = accountDao.findAll();
-        for (Account account : accountList) {
-            if (account.getStudentNumber().equals(name)) {
-                return false;
-            }
-        }
-        return true;
     }
-
-    public void save(String name, String password) {
-        Account account = new Account();
-        account.setStudentNumber(name);
-        account.setPassword(password);
+    //保存
+    public void save(String studentNumber, String password, String name, String courseStartDate, CourseCategory courseCategory) {
+        Account account = new Account(studentNumber, password, name, courseStartDate, courseCategory);
         accountDao.save(account);
+// 删除所有数据
+//        List<Account> all = accountDao.findAll();
+//        for (Account account1 : all) {
+//            accountDao.deleteById(account1.getId());
+//        }
     }
 
-    public boolean checkLogin(String name, String password) {
-        Account account = accountDao.findByStudentNumber(name);
+    //登录
+    public boolean checkLogin(String studentNumber, String password) {
+        Account account = accountDao.findByStudentNumber(studentNumber);
         if (account == null) {
             return false;
         } else {
@@ -45,3 +45,4 @@ public class AccountService {
         }
     }
 }
+

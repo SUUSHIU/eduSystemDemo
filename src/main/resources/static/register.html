@@ -2,9 +2,138 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shang Yi Studio - Register</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], input[type="password"] {
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .register-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .register-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 
+<div class="container">
+    <div class="logo">
+        <img src="images/logo.png" alt="Shang Yi Studio Logo">
+    </div>
+
+    <h2>Register</h2>
+
+    <div class="input-box">
+        <input type="text" id="studentNumber"  name="studentNumber" placeholder="学号">
+    </div>
+
+    <div class="input-box">
+        <input type="password" id="password" name="password" placeholder="密码">
+    </div>
+
+    <div class="input-box">
+        <input type="text" id="name" name="name" placeholder="全名">
+    </div>
+
+    <div class="input-box">
+        <input type="text" id="courseCategory" name="courseCategory" placeholder="报名课程区分">
+    </div>
+
+    <div class="input-box">
+        <input type="text" id="courseStartDate" name="courseStartDate" placeholder="课程开始时间">
+    </div>
+
+    <button class="register-btn" onclick="register()">注册</button>
+</div>
+
+<script>
+    async function register() {
+        var studentNumber = document.getElementById("studentNumber").value;
+        var password = document.getElementById("password").value;
+        var name = document.getElementById("name").value;
+        var courseCategory = document.getElementById("courseCategory").value;
+        var courseStartDate = document.getElementById("courseStartDate").value;
+
+
+        try {
+            const response = await fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                studentNumber,
+                password,
+                name,
+                courseCategory,
+                courseStartDate
+                 })  // 将这里的字段都写上去
+            });
+
+            const result = await response.json();
+            // 检查请求是否成功
+            if (result.success) {
+                console.log('注册成功');
+                // 可以在这里进行跳转或者弹出提示
+                alert('注册成功');
+                window.location.href = "/login.html";
+            } else {
+                console.log('注册失败');
+                alert('注册失败');
+            }
+        } catch (error) {
+            console.error('请求出错:', error);
+
+
+
+        }
+    }
+</script>
+
 </body>
 </html>
+
+
