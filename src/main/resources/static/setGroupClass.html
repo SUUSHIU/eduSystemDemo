@@ -53,48 +53,52 @@
         }
     </script>
 </head>
+
 <body>
 
 <h2>设置课程</h2>
 
 <form id="courseForm">
-    <label for="courseCategory">课程类别:</label>
+    <label for="courseCategory">课程区分:</label>
     <input type="text" id="courseCategory" name="courseCategory"><br><br>
 
-    <label for="groupClassType">班级类型:</label>
+    <label for="groupClassType">班课种类:</label>
     <input type="text" id="groupClassType" name="groupClassType"><br><br>
 
-    <label for="className">课程名称:</label>
+    <label for="className">班课回数:</label>
     <input type="text" id="className" name="className"><br><br>
 
-    <label for="baseClassName">基础课程名称:</label>
+    <label for="baseClassName">课程名称:</label>
     <input type="text" id="baseClassName" name="baseClassName"><br><br>
 
     <label for="classMode">授课模式:</label>
     <input type="text" id="classMode" name="classMode"><br><br>
 
-    <label for="classStartDate">开始日期:</label>
+    <label for="classStartDate">班课开始日期:</label>
     <input type="date" id="classStartDate" name="classStartDate"><br><br>
 
-    <label for="classStartDateOfWeek">每周开始日期:</label>
+    <label for="classStartDateOfWeek">曜日:</label>
     <input type="text" id="classStartDateOfWeek" name="classStartDateOfWeek"><br><br>
 
-    <label for="classStartTime">开始时间:</label>
+    <label for="classStartTime">班课开始时间:</label>
     <input type="time" id="classStartTime" name="classStartTime"><br><br>
 
-    <label for="classEndTime">结束时间:</label>
+    <label for="classEndTime">班课结束时间:</label>
     <input type="time" id="classEndTime" name="classEndTime"><br><br>
 
-    <label for="classLanguage">语言:</label>
+    <label for="classLanguage">授课语言:</label>
     <input type="text" id="classLanguage" name="classLanguage"><br><br>
 
     <label for="totalSeats">总座位数:</label>
     <input type="number" id="totalSeats" name="totalSeats"><br><br>
 
-    <label for="studentNumberList">学生编号 (用逗号分隔):</label>
+    <label for="studentNumberList">报名学生名单 (用逗号分隔):</label>
     <input type="text" id="studentNumberList" name="studentNumberList"><br><br>
 
     <button type="button" onclick="addCourse()">添加课程</button>
+
+    <button type="button" onclick="deleteCourse()">删除课程</button>
+
 </form>
 
 </body>

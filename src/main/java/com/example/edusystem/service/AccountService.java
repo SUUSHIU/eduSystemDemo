@@ -3,10 +3,12 @@ package com.example.edusystem.service;
 import com.example.edusystem.dao.AccountDao;
 import com.example.edusystem.dto.Account;
 import com.example.edusystem.dto.CourseCategory;
+import com.example.edusystem.dto.GroupClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class AccountService {
@@ -43,6 +45,49 @@ public class AccountService {
             account.getPassword().equals(password);
             return true;
         }
+    }
+
+    //计算课时
+    public void countAccountNumber(String studentNumber, GroupClass groupClass){
+        double baseTotalNumber = groupClass.getCourseNumber(); //初始课程总数
+        double costNumber = Integer.valueOf(groupClass.getClassEndTime()) - Integer.valueOf(groupClass.getClassStartTime()); //选的这节课的课时
+
+        Account account = accountDao.findByStudentNumber(studentNumber);
+
+        // 获取现有的 courseUsedTime，如果不存在则创建一个新的 HashMap
+        Map<String, Double> courseUsedTime = account.courseUsedTime;
+        if (courseUsedTime == null) {
+            courseUsedTime = new HashMap<>();
+        }
+
+        // 累加已使用的时间
+        courseUsedTime.put(groupClass.baseClassName,
+                courseUsedTime.getOrDefault(groupClass.baseClassName, 0.0) + costNumber);
+
+        // 计算剩余时间：总时间 - 累加的已使用时间
+        double restNumber = baseTotalNumber - courseUsedTime.get(groupClass.baseClassName);
+
+        // 更新 account 中的已使用时间和剩余时间
+        account.courseUsedTime = courseUsedTime;
+
+        Map<String, Double> courseUnUsedTime = account.courseUnUsedTime;
+        if (courseUnUsedTime == null) {
+            courseUnUsedTime = new HashMap<>();
+        }
+
+        // 更新剩余时间
+        courseUnUsedTime.put(groupClass.baseClassName, restNumber);
+        account.courseUnUsedTime = courseUnUsedTime;
+
+        accountDao.save(account);
+
+
+        //退选课
+        //Post（student， id）
+        //通过课id 获得List -> 删除学生的Number， 座位数 + 1
+        //通过学生的Number -> 回滚课时数
+        //更新课时的功能（正好相反）
+
     }
 }
 

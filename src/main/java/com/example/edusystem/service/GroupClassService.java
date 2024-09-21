@@ -2,21 +2,26 @@ package com.example.edusystem.service;
 
 import com.example.edusystem.dao.GroupClassDao;
 import com.example.edusystem.dto.GroupClass;
+import com.example.edusystem.dto.GroupClassType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class GroupClassService {
     @Autowired
     GroupClassDao groupClassDao;
 
+    @Autowired
+    AccountService accountService;
 
     public void saveGroupClass(GroupClass groupClass) {
+        for (String studentNumber : groupClass.getStudentNumberList()) {
+            accountService.countAccountNumber(studentNumber, groupClass);
+        }
         groupClassDao.save(groupClass);
     }
 
@@ -84,14 +89,60 @@ public class GroupClassService {
     //这个学生选的所有课
     public List<GroupClass> getAllClassByStudent(String studentNumber) {
         List<GroupClass> allGroupClasses = groupClassDao.findAll();
-
+        //stream专门用来排序
         return allGroupClasses.stream()
                 .filter(gc -> {
+                    //查在所有GroupClass中有这个studentNumber的，返回一个课程的List
                     List<String> studentList = gc.getStudentNumberList();
                     return studentList != null && studentList.contains(studentNumber);
                 })
                 .toList();
     }
+    //第一层：通过查找Type获取相应的班课回数Name
+    public List<GroupClass> getGroupClassNameByGroupClassType(GroupClassType groupClassType){
+        List<GroupClass> allGroupClasses = groupClassDao.findAll();
+        return allGroupClasses.stream()
+                .filter(gc -> {
+                    var groupClassType1 = gc.getGroupClassType();
+                    return groupClassType1 != null && groupClassType1.equals(groupClassType);
+                })
+                .toList();
+    }
+
+    //第二层：通过查找Name获取相应的baseClassName
+    public List<GroupClass> getBaseClassNameByGroupClassName(String className){
+        //查一遍全部课
+        List<GroupClass> allGroupClasses = groupClassDao.findAll();
+        return allGroupClasses.stream()
+                .filter(gc -> {
+                    //查在所有GroupClass中属于这个的，返回一个base课程的List
+                    var className1 = gc.getClassName();
+                    return className1 != null && className1.equals(className);
+                })
+                .toList();
+    }
+
+    public GroupClass getById(Long id){
+        Optional<GroupClass> groupClass = groupClassDao.findById(id);
+        return groupClass.orElse(null);
+    }
+
+    public boolean saveGroupClassById(String studentNumber, GroupClass groupClass){
+        List<String> studentNumberList = groupClass.getStudentNumberList();
+        studentNumberList.add(studentNumber);
+        groupClass.setStudentNumberList(studentNumberList);
+        if (groupClass.getTotalSeats() > 0){
+            groupClass.setTotalSeats(groupClass.getTotalSeats() - 1);
+            accountService.countAccountNumber(studentNumber, groupClass);
+            groupClassDao.save(groupClass);
+        } else
+        {
+            return false;
+        }
+        return true;
+    }
+
+
+
 }
 
-//注册 - 登录 - 创建学生， 同时创建个人信息
