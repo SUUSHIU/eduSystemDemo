@@ -2,7 +2,9 @@ package com.example.edusystem.dto;
 
 import jakarta.persistence.*;
 
+import java.rmi.MarshalledObject;
 import java.time.LocalDate;
+import java.util.Map;
 
 
 @Entity
@@ -69,6 +71,12 @@ public class Account {
 
     @Column(name = "Course_Category")
     public CourseCategory courseCategory;
+
+    //已使用时间
+    public Map<String, Double> courseUsedTime;
+
+    //未使用时间
+    public Map<String, Double> courseUnUsedTime;
 
     public CourseCategory getCourseCategory() {
         return courseCategory;

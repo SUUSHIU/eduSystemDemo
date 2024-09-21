@@ -17,9 +17,13 @@ public class ViewController {
     public String getMyPage(){
         return "/myPage.html";
     }
-    @GetMapping("/failure")
-    public String getFailure(){
-        return "/failure.html";
+    @GetMapping("/setGroupClass")
+    public String getSetGroupClass(){
+        return "/setGroupClass.html";
+    }
+    @GetMapping("/AllGroupClass")
+    public String getAllGroupClass(){
+        return "/AllGroupClass.html";
     }
 }
 

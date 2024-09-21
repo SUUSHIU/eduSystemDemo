@@ -1,6 +1,7 @@
 package com.example.edusystem.controller;
 
 import com.example.edusystem.dao.AccountDao;
+import com.example.edusystem.dto.Account;
 import com.example.edusystem.dto.CourseCategory;
 import com.example.edusystem.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,15 +60,13 @@ public class AccountController {
         }
         return ResponseEntity.ok(response); //返回JSON响应
     }
+
+    @PostMapping("/api/register")
+    public ResponseEntity<?> register(@RequestBody Account account) {
+        // 处理注册逻辑
+        return ResponseEntity.ok("注册成功");
+    }
+
+
 }
-
-
-//9/14
-//学生注册和登录，进数据库 --- 写不进数据库
-//看学生的课表（get）
-//在加课 -- studentNumber
-// -- classList --
-
-
-//画教务端
 

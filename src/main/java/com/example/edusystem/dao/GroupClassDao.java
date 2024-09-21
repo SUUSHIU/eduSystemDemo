@@ -17,4 +17,5 @@ public interface GroupClassDao extends JpaRepository<GroupClass, Long> {
     List<GroupClass> findByStudentNumberListIn(@Param("studentNumberList") List<String> studentNumberList);
 
 
+
 }

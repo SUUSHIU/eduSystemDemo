@@ -190,6 +190,7 @@ public class GroupClass {
         this.classLanguage = classLanguage;
     }
 
+    //每个课的学生列表
     public List<String> getStudentNumberList() {
         return studentNumberList;
     }
