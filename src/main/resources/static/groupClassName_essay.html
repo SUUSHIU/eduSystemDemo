@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小論文授業</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            font-size: 24px;
+            margin-right: 20px;
+            text-decoration: none;
+            color: #000;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .class-item {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .class-item.full {
+            background-color: #e8f5e9;
+        }
+        .class-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .class-title {
+            font-weight: bold;
+        }
+        .class-type {
+            font-size: 12px;
+            background-color: #000;
+            color: #fff;
+            padding: 2px 5px;
+            border-radius: 10px;
+        }
+        .class-date {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .reserve-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .full-text {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #e0e0e0;
+        }
+        .nav-item {
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="#" class="back-button">←</a>
+        <h1>小論文授業</h1>
+    </header>
+    <div id="class-list"></div>
+</div>
+<nav class="nav-bar">
+    <div class="nav-item">📅</div>
+    <div class="nav-item">🔍</div>
+    <div class="nav-item">👤</div>
+</nav>
+
+<script>
+    const classList = [
+        { id: 1, title: '小論文授業・第1回', date: '7月20日(土)', type: '対面授業', isFull: false },
+        { id: 2, title: '小論文授業・第2回', date: '7月27日(土)', type: '対面授業', isFull: false },
+        { id: 3, title: '小論文授業・第3回', date: '8月3日(土)', type: '対面授業', isFull: true },
+        { id: 4, title: '小論文授業・第4回', date: '8月24日(土)', type: '対面授業', isFull: false },
+    ];
+
+    function renderClasses() {
+        const classListElement = document.getElementById('class-list');
+        classListElement.innerHTML = '';
+
+        classList.forEach(classItem => {
+            const classElement = document.createElement('div');
+            classElement.className = `class-item ${classItem.isFull ? 'full' : ''}`;
+            classElement.innerHTML = `
+                <div class="class-header">
+                    <span class="class-title">${classItem.title}</span>
+                    <span class="class-type">${classItem.type}</span>
+                </div>
+                <div class="class-date">${classItem.date}</div>
+                ${classItem.isFull
+                    ? '<span class="full-text">満員</span>'
+                    : `<button class="reserve-button" onclick="reserveClass(${classItem.id})">课程详情</button>`
+                }
+            `;
+            classListElement.appendChild(classElement);
+        });
+    }
+
+    function reserveClass(classId) {
+        window.location.href = "baseClass_essay.html";
+    }
+    renderClasses();
+</script>
+</body>
+</html>

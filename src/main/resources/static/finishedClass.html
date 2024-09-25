@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myClass_finishedClass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .course-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .ended-header {
+            background-color: #00b8e6;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .course {
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-ended {
+            color: #b0b0b0;
+        }
+
+        .course p {
+            margin: 5px 0;
+        }
+
+        .course strong {
+            font-size: 18px;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-around;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 500px;
+            background-color: #fff;
+            padding: 10px 0;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        footer img {
+            width: 30px;
+            height: 30px;
+        }
+
+        footer div {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="course-container">
+    <h2>最近上课提醒</h2>
+    <div id="recent-course-list">
+        <!-- 最近上课的数据将通过JS渲染到这里 -->
+    </div>
+
+    <div class="ended-header">
+        已结束的课程
+    </div>
+    <div id="ended-course-list">
+        <!-- 已结束的课程数据将通过JS渲染到这里 -->
+    </div>
+</div>
+
+<footer>
+    <div>
+        <img src="calendar-icon.png" alt="课程表">
+    </div>
+    <div>
+        <img src="search-icon.png" alt="搜索">
+    </div>
+    <div>
+        <img src="user-icon.png" alt="个人信息">
+    </div>
+</footer>
+
+<script>
+    // 渲染最近的课程
+    function renderRecentClass(data) {
+        const recentCourseList = document.getElementById('recent-course-list');
+        const courseElement = document.createElement('div');
+        courseElement.classList.add('course');
+
+        const cancelButton = data.canCancel ?
+            `<button class="cancel-button">授業をキャンセル</button>` :
+            `<button class="cancel-button" disabled>授業をキャンセル</button>`;
+
+        courseElement.innerHTML = `
+            <p><strong>${data.name}</strong></p>
+            <p>${data.date}</p>
+            <p>${data.time}</p>
+            <p>${data.location}</p>
+            ${cancelButton}
+        `;
+
+        recentCourseList.appendChild(courseElement);
+    }
+
+    // 渲染已结束的课程
+    function renderEndedClasses(data) {
+        const endedCourseList = document.getElementById('ended-course-list');
+        data.forEach(course => {
+            const courseElement = document.createElement('div');
+            courseElement.classList.add('course', 'course-ended');
+            courseElement.innerHTML = `
+                <p><strong>${course.name}</strong></p>
+                <p>${course.date}</p>
+                <p>${course.time}</p>
+                <p>${course.location}</p>
+            `;
+            endedCourseList.appendChild(courseElement);
+        });
+    }
+
+    // 从后端获取课程数据
+    async function fetchCourses() {
+        try {
+            // 获取最近课程的数据
+            const recentResponse = await fetch('/api/recent-course'); // 替换为你的后端接口
+            const recentClassData = await recentResponse.json();
+            renderRecentClass(recentClassData);
+
+            // 获取已结束课程的数据
+            const endedResponse = await fetch('/api/ended-courses'); // 替换为你的后端接口
+            const endedClassesData = await endedResponse.json();
+            renderEndedClasses(endedClassesData);
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    }
+
+    // 页面加载时渲染课程信息
+    window.onload = function() {
+        fetchCourses();
+    }
+</script>
+</body>
+</html>
+ml>

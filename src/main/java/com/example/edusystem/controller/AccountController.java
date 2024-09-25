@@ -26,21 +26,21 @@ public class AccountController {
         String password = user.get("password");
         String name = user.get("name");
         String courseStartDate = user.get("courseStartDate");
+        //前端只能传回String，为对象设置对应的String值value -> 通过value找对象
         String courseCategoryValue = user.get("courseCategory");
         CourseCategory courseCategory = CourseCategory.getByValue(courseCategoryValue);
 
-
-        Map<String, Object> response = new HashMap<>(); //检查注册是否正确
+        Map<String, Object> response = new HashMap<>();
         boolean result = accountService.checkRegister(studentNumber, password);
 
         if (result) {
             accountService.save(studentNumber, password, name, courseStartDate, courseCategory );
-            response.put("success", true); //注册成功
+            response.put("success", true);
         } else {
-            response.put("success", false); //表示注册失败
-            response.put("message", "注册失败"); //向前端传输失败信息
+            response.put("success", false);
+            response.put("message", "注册失败");
         }
-        return ResponseEntity.ok(response); //返回JSON响应
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/login")
@@ -48,12 +48,12 @@ public class AccountController {
         String studentNumber = user.get("studentNumber");
         String password = user.get("password");
 
-        Map<String, Object> response = new HashMap<>(); //检查登录是否正确
+        Map<String, Object> response = new HashMap<>();
         boolean result = accountService.checkLogin(studentNumber, password);
 
         if (result) {
             response.put("Success", true);
-            response.put("redirectUrl", "/myPage.html"); //成功登录，定向到myPage
+            response.put("redirectUrl", "/groupClassType.html"); //成功登录，定向到选课页面
         } else {
             response.put("Success", false);
             response.put("redirectUrl", "/login.html"); //登录失败，定向到login
@@ -61,12 +61,11 @@ public class AccountController {
         return ResponseEntity.ok(response); //返回JSON响应
     }
 
+    //这是什么↓
     @PostMapping("/api/register")
     public ResponseEntity<?> register(@RequestBody Account account) {
         // 处理注册逻辑
         return ResponseEntity.ok("注册成功");
     }
-
-
 }
 

@@ -150,9 +150,7 @@ public class GroupClass {
         this.classMode = classMode;
     }
 
-    public String getClassStartDate() {
-        return classStartDate;
-    }
+    public String getClassStartDate() { return classStartDate; }
 
     public void setClassStartDate(String classStartDate) {
         this.classStartDate = classStartDate;

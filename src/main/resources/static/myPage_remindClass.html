@@ -68,22 +68,19 @@
         <div id="recent-class" class="dropdown-content"></div>
     </div>
     <div class="dropdown">
-        <button class="dropdown-title">未上课的课程</button>
-        <div class="dropdown-content">
-            <!-- Unattended classes content will go here -->
-        </div>
+        <button class="dropdown-title" onclick="getUnattendedClasses()">未上课的课程</button>
+        <div id="unattended-classes" class="dropdown-content"></div>
     </div>
     <div class="dropdown">
-        <button class="dropdown-title">已结束的课程</button>
-        <div class="dropdown-content">
-            <!-- Completed classes content will go here -->
-        </div>
+        <button class="dropdown-title" onclick="getCompletedClasses()">已结束的课程</button>
+        <div id="completed-classes" class="dropdown-content"></div>
     </div>
 </div>
 
 <script>
+    // 显示最近上课提醒
     async function getRecentClass() {
-        const studentNumber = '12345'; // Replace with dynamic value if needed
+        const studentNumber = '12345'; //待修改
         try {
             const response = await fetch(`/class/recent/${studentNumber}`);
             if (response.ok) {
@@ -100,6 +97,50 @@
         } catch (error) {
             document.getElementById('recent-class').innerHTML = '<p>请求失败</p>';
             console.error('Error fetching recent classes:', error);
+        }
+    }
+
+    // 未上课的课程
+    async function getUnattendedClasses() {
+        const studentNumber = '12345'; //待修改
+        try {
+            const response = await fetch(`/class/upComing/${studentNumber}`);
+            if (response.ok) {
+                const unattendedClasses = await response.json();
+                const classList = unattendedClasses.map(
+                    (classItem) => `
+                        <p>${classItem.className}</p>
+                        <p>${classItem.classDate} ${classItem.classTime}</p>`
+                ).join('');
+                document.getElementById('unattended-classes').innerHTML = classList;
+            } else {
+                document.getElementById('unattended-classes').innerHTML = '<p>无法获取未上课的课程</p>';
+            }
+        } catch (error) {
+            document.getElementById('unattended-classes').innerHTML = '<p>请求失败</p>';
+            console.error('Error fetching unattended classes:', error);
+        }
+    }
+
+    // 已结束课程
+    async function getCompletedClasses() {
+        const studentNumber = '12345';  //待修改
+        try {
+            const response = await fetch(`/class/finish/${studentNumber}`);
+            if (response.ok) {
+                const completedClasses = await response.json();
+                const classList = completedClasses.map(
+                    (classItem) => `
+                        <p>${classItem.className}</p>
+                        <p>${classItem.classDate} ${classItem.classTime}</p>`
+                ).join('');
+                document.getElementById('completed-classes').innerHTML = classList;
+            } else {
+                document.getElementById('completed-classes').innerHTML = '<p>无法获取已结束的课程</p>';
+            }
+        } catch (error) {
+            document.getElementById('completed-classes').innerHTML = '<p>请求失败</p>';
+            console.error('Error fetching completed classes:', error);
         }
     }
 </script>

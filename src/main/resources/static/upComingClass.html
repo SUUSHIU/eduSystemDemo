@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>myClass_upComingClass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .course-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .course {
+            background-color: #f0f0f0;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .course p {
+            margin: 0;
+        }
+        .cancel-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .cancel-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="course-container">
+    <h2>未上课的课程</h2>
+    <div id="course-list">
+        <!-- 课程数据将通过JS渲染到这里 -->
+    </div>
+</div>
+
+<script>
+    // 调用API并获取课程数据
+    async function fetchCourses() {
+        try {
+            const response = await fetch('/api/courses'); // 替换为你的API路径
+            const courses = await response.json();
+
+            const courseList = document.getElementById('course-list');
+            courseList.innerHTML = '';
+
+            courses.forEach(course => {
+                const courseElement = document.createElement('div');
+                courseElement.classList.add('course');
+
+                courseElement.innerHTML = `
+                    <p><strong>${course.name}</strong></p>
+                    <p>${course.date} (${course.time})</p>
+                    <p>${course.location}</p>
+                    <button class="cancel-button" onclick="cancelClass(${course.id})">授業をキャンセル</button>
+                `;
+
+                courseList.appendChild(courseElement);
+            });
+        } catch (error) {
+            console.error('Error fetching courses:', error);
+        }
+    }
+
+    // 调用API取消课程
+    async function cancelClass(courseId) {
+        try {
+            const response = await fetch(`/api/courses/${courseId}/cancel`, {
+                method: 'POST',
+            });
+
+            if (response.ok) {
+                alert('课程取消成功');
+                fetchCourses(); // 重新获取更新后的课程列表
+            } else {
+                alert('课程取消失败');
+            }
+        } catch (error) {
+            console.error('Error cancelling course:', error);
+        }
+    }
+
+    // 页面加载时获取课程数据
+    window.onload = fetchCourses;
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>确认选课</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back-button {
+            font-size: 24px;
+            margin-right: 20px;
+            text-decoration: none;
+            color: #000;
+        }
+        h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .course-info {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .course-date {
+            background-color: #ffff00;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .course-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .course-time {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .course-details {
+            margin-bottom: 15px;
+        }
+        .course-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+        .course-detail::before {
+            content: "✓";
+            margin-right: 10px;
+        }
+        .reserve-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #e0e0e0;
+        }
+        .nav-item {
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <a href="#" class="back-button">←</a>
+        <h1>确认选课</h1>
+    </header>
+    <div class="course-info">
+        <div class="course-date">
+            <div class="course-title">研究计划书授業・第1回</div>
+            <div class="course-time">7月27日(土)</div>
+        </div>
+        <div class="course-details">
+            <div class="course-detail">
+                <strong>デザイン</strong>
+            </div>
+            <div class="course-time">14:00-17:00</div>
+            <div class="course-detail">现场授课：3小时</div>
+            <div class="course-detail">剩余座位：10</div>
+            <div class="course-detail">授课语言：中文</div>
+            <button class="reserve-button" onclick="reserveCourse('design')">授業を予約</button>
+        </div>
+        <hr>
+        <div class="course-details">
+            <div class="course-detail">
+                <strong>ファインアート</strong>
+            </div>
+            <div class="course-time">18:00-21:00</div>
+            <div class="course-detail">现场授课：3小时</div>
+            <div class="course-detail">剩余座位：4</div>
+            <div class="course-detail">授课语言：日语</div>
+            <button class="reserve-button" onclick="reserveCourse('fineart')">授業を予約</button>
+        </div>
+    </div>
+</div>
+<nav class="nav-bar">
+    <div class="nav-item">📅</div>
+    <div class="nav-item">🔍</div>
+    <div class="nav-item">👤</div>
+</nav>
+
+
+<script>
+    function chooseCourse() {
+        //前端要获得学号和课程的id
+        var studentNumber = document.getElementById("studentNumber").value;
+        var groupClassId = document.getElementById("groupClassId").value;
+
+        var loginData ={
+           studentNumber: studentNumber,
+           groupClassId: groupClassId
+        };
+
+
+         function chooseClass(value) {
+        // 构建请求URL，将 value 替换为动态传入的值
+        fetch(`/api/class/chooseClass/${value}`, {
+            method: "GET", // 使用 GET 请求
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("请求失败");
+            }
+            return response.json(); // 假设后端返回 JSON 数据
+        })
+        .then(result => {
+            console.log(`Reserving ${value} course`);
+            alert('预约成功');
+            window.location.href = "myPage_countClassHour.html";
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+</script>
+
+
+</body>
+</html>
