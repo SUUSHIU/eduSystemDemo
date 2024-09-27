@@ -20,8 +20,8 @@ public class GroupClassService {
     @Autowired
     AccountService accountService;
 
-    //有点不懂这个方法的意图？
-    //传入一节groupClass，看它的List中有没有这个studentNumber，有的话进行课时计算，并更新致account？
+    //后台设置课程
+    //传入一节groupClass，看它的List中有没有这个studentNumber，有的话进行课时计算，并更新致account
     public void saveGroupClass(GroupClass groupClass) {
         for (String studentNumber : groupClass.getStudentNumberList()) {
             accountService.countAccountNumber(studentNumber, groupClass);

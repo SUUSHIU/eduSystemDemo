@@ -7,9 +7,9 @@ import com.example.edusystem.dto.GroupClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AccountService {
@@ -61,17 +61,17 @@ public class AccountService {
         //初始课程总数
         double initialTotalClassNumber = groupClass.getCourseNumber();
         //本次所选课程的时长（End - Start）
-        double thisClassHour = Integer.valueOf(groupClass.getClassEndTime()) -
-                Integer.valueOf(groupClass.getClassStartTime());
+        Duration dur = Duration.between(groupClass.getClassStartTime(), groupClass.getClassEndTime());
+        double thisClassHour = dur.toMinutes() / 60.0;
 
         //每次扣除课时的记录 -> Map<String, Double> -> baseClassName，thisClassHour
         Account account = accountDao.findByStudentNumber(studentNumber);
-        if (account.UsedClassHour == null) { account.UsedClassHour = new HashMap<>(); }
+        if (account.usedClassHour == null) { account.usedClassHour = new HashMap<>(); }
 
-        account.UsedClassHour.put(groupClass.baseClassName, thisClassHour);
+        account.usedClassHour.put(groupClass.baseClassName, thisClassHour);
 
         //总共使用的课时（value 的 sum）
-        double UsedHourTotal =account.UsedClassHour.values().stream()
+        double UsedHourTotal =account.usedClassHour.values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
 
@@ -92,15 +92,16 @@ public class AccountService {
     public void minusCountAccountNumber(String studentNumber, GroupClass groupClass){
         //初始课程总数
         double initialTotalClassNumber = groupClass.getCourseNumber();
-        //已使用课程数（所选课程的时长）
-        double thisClassHour = Integer.valueOf(groupClass.getClassEndTime()) -
-                Integer.valueOf(groupClass.getClassStartTime());
+        //已使用课程数（所选课程的时长 Duration类）
+        Duration dur = Duration.between(groupClass.getClassStartTime(), groupClass.getClassEndTime());
+        double thisClassHour = dur.toMinutes() / 60.0;
+
 
         Account account = accountDao.findByStudentNumber(studentNumber);
-        if (account.UsedClassHour == null) { account.UsedClassHour = new HashMap<>(); }
-        account.UsedClassHour.remove(groupClass.baseClassName, thisClassHour);
+        if (account.usedClassHour == null) { account.usedClassHour = new HashMap<>(); }
+        account.usedClassHour.remove(groupClass.baseClassName, thisClassHour);
 
-        double UsedHourTotal =account.UsedClassHour.values().stream()
+        double UsedHourTotal =account.usedClassHour.values().stream()
                 .mapToDouble(Double::doubleValue)
                 .sum();
 

@@ -107,9 +107,7 @@ public class GroupClassController {
         return ResponseEntity.ok(response); //返回JSON响应
     }
 
-    //计算这个学生共报名了哪些课？
-    //每次调用会再更新一遍他的classHour？
-    //这个是不是可以删除？
+    //设置课程用
     @PostMapping("/groupClass")
     public void postGroupClass(@RequestBody GroupClass groupClass) {
         groupClassService.saveGroupClass(groupClass);
@@ -133,8 +131,6 @@ public class GroupClassController {
         }
         return ResponseEntity.ok(response); //返回给前端
     }
-
-
 }
 
 

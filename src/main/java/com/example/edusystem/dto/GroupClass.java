@@ -3,6 +3,7 @@ package com.example.edusystem.dto;
 import jakarta.persistence.*;
 import org.springframework.lang.NonNull;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -61,13 +62,15 @@ public class GroupClass {
      * 上课时间
      * 表示班课开始的具体时间（如：09:00）
      */
-    public String classStartTime;
+    //public String classStartTime;
+    public LocalTime classStartTime;
 
     /**
      * 下课时间
      * 表示班课结束的具体时间（如：11:00）
      */
-    public String classEndTime;
+    //public String classEndTime;
+    public LocalTime classEndTime;
 
     /**
      * 授课语言
@@ -164,25 +167,15 @@ public class GroupClass {
         this.classStartDateOfWeek = classStartDateOfWeek;
     }
 
-    public String getClassStartTime() {
-        return classStartTime;
-    }
+    public LocalTime getClassStartTime() { return classStartTime; }
 
-    public void setClassStartTime(String classStartTime) {
-        this.classStartTime = classStartTime;
-    }
+    public void setClassStartTime(LocalTime classStartTime) { this.classStartTime = classStartTime; }
 
-    public String getClassEndTime() {
-        return classEndTime;
-    }
+    public LocalTime getClassEndTime() { return classEndTime; }
 
-    public void setClassEndTime(String classEndTime) {
-        this.classEndTime = classEndTime;
-    }
+    public void setClassEndTime(LocalTime classEndTime) { this.classEndTime = classEndTime; }
 
-    public String getClassLanguage() {
-        return classLanguage;
-    }
+    public String getClassLanguage() { return classLanguage; }
 
     public void setClassLanguage(String classLanguage) {
         this.classLanguage = classLanguage;

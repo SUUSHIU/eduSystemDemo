@@ -72,7 +72,7 @@ public class Account {
 
     //已使用时间
     @ElementCollection
-    public Map<String, Double> UsedClassHour;
+    public Map<String, Double> usedClassHour;
 
     //未使用时间
     @ElementCollection
