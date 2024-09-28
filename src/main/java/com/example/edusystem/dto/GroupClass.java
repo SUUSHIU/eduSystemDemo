@@ -1,10 +1,19 @@
 package com.example.edusystem.dto;
 
 import jakarta.persistence.*;
+import jakarta.websocket.EncodeException;
 import org.springframework.lang.NonNull;
 
 import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 @Entity
 public class GroupClass {
@@ -62,15 +71,14 @@ public class GroupClass {
      * 上课时间
      * 表示班课开始的具体时间（如：09:00）
      */
-    //public String classStartTime;
-    public LocalTime classStartTime;
+    public String classStartTime;
+
 
     /**
      * 下课时间
      * 表示班课结束的具体时间（如：11:00）
      */
-    //public String classEndTime;
-    public LocalTime classEndTime;
+    public String classEndTime;
 
     /**
      * 授课语言
@@ -167,13 +175,13 @@ public class GroupClass {
         this.classStartDateOfWeek = classStartDateOfWeek;
     }
 
-    public LocalTime getClassStartTime() { return classStartTime; }
+    public String getClassStartTime() { return classStartTime; }
 
-    public void setClassStartTime(LocalTime classStartTime) { this.classStartTime = classStartTime; }
+    public void setClassStartTime(String classStartTime) { this.classStartTime = classStartTime; }
 
-    public LocalTime getClassEndTime() { return classEndTime; }
+    public String getClassEndTime() { return classEndTime; }
 
-    public void setClassEndTime(LocalTime classEndTime) { this.classEndTime = classEndTime; }
+    public void setClassEndTime(String classEndTime) { this.classEndTime = classEndTime; }
 
     public String getClassLanguage() { return classLanguage; }
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -61,7 +63,10 @@ public class AccountService {
         //初始课程总数
         double initialTotalClassNumber = groupClass.getCourseNumber();
         //本次所选课程的时长（End - Start）
-        Duration dur = Duration.between(groupClass.getClassStartTime(), groupClass.getClassEndTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime startTime = LocalTime.parse(groupClass.getClassStartTime(), formatter);
+        LocalTime endTime = LocalTime.parse(groupClass.getClassStartTime(), formatter);
+        Duration dur = Duration.between(startTime, endTime);
         double thisClassHour = dur.toMinutes() / 60.0;
 
         //每次扣除课时的记录 -> Map<String, Double> -> baseClassName，thisClassHour
@@ -93,9 +98,11 @@ public class AccountService {
         //初始课程总数
         double initialTotalClassNumber = groupClass.getCourseNumber();
         //已使用课程数（所选课程的时长 Duration类）
-        Duration dur = Duration.between(groupClass.getClassStartTime(), groupClass.getClassEndTime());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime startTime = LocalTime.parse(groupClass.getClassStartTime(), formatter);
+        LocalTime endTime = LocalTime.parse(groupClass.getClassStartTime(), formatter);
+        Duration dur = Duration.between(startTime, endTime);
         double thisClassHour = dur.toMinutes() / 60.0;
-
 
         Account account = accountDao.findByStudentNumber(studentNumber);
         if (account.usedClassHour == null) { account.usedClassHour = new HashMap<>(); }
@@ -112,10 +119,3 @@ public class AccountService {
         accountDao.save(account);
     }
 }
-
-
-
-
-
-
-
