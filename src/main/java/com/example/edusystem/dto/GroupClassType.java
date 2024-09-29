@@ -6,22 +6,22 @@ public enum GroupClassType {
      * 研究计划书
      * 设计类、纯艺类、ACG
      */
-    researchProposalClass_1("researchProposalClass"),
+    researchProposalClass_1("research"),
 
 
     /**
      * 小论文班课
      * 设计类、纯艺类、ACG
      */
-    EssayClass_1("小论文"),
+    EssayClass_1("essay"),
 
     /**
      * 模拟面试
      * 排版课、制本课
      */
-    interviewClass_1("模拟面试"),
-    PortfolioLayoutClass_2("排版课"),
-    bookDesignClass_3("制本课");
+    interviewClass_1("interview"),
+    PortfolioLayoutClass_2("layout"),
+    bookDesignClass_3("book");
 
 
     String value;

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>选班课</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .pin {
+            color: red;
+            font-size: 20px;
+            transform: rotate(45deg);
+            display: inline-block;
+            margin-left: 5px;
+        }
+        .course-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .course-item {
+            background-color: #f8f8f8;
+            border-radius: 25px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .add-icon {
+            font-size: 20px;
+            margin-right: 10px;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            background-color: #fff;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border-top: 1px solid #e0e0e0;
+        }
+        .nav-item {
+            text-align: center;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>选班课 <span class="pin">📌</span></h1>
+    <ul class="course-list">
+        <li class="course-item" id="research-class"><span class="add-icon">+</span> 研究计画書授業</li>
+        <li class="course-item" id="essay-class"><span class="add-icon">+</span> 小論文授業</li>
+        <li class="course-item" id="interview-class"><span class="add-icon">+</span> 模擬面接授業</li>
+        <li class="course-item" id="layout-class"><span class="add-icon">+</span> レイアウト講座</li>
+        <li class="course-item" id="book-class"><span class="add-icon">+</span> 製本講座</li>
+    </ul>
+</div>
+<nav class="nav-bar">
+    <div class="nav-item">📅</div>
+    <div class="nav-item">🔍</div>
+    <div class="nav-item">👤</div>
+</nav>
+
+
+<script>
+    // 点击“研究计画書授業”跳转到 groupClassName_Essay.html
+    document.getElementById("research-class").addEventListener("click", function() {
+        window.location.href = "groupClassName_research.html";
+    });
+    document.getElementById("essay-class").addEventListener("click", function() {
+        window.location.href = "groupClassName_essay.html";
+    });
+     document.getElementById("interview-class").addEventListener("click", function() {
+        window.location.href = "groupClassName_interview.html";
+    });
+     document.getElementById("layout-class").addEventListener("click", function() {
+        window.location.href = "groupClassName_layout.html";
+    });
+     document.getElementById("book-class").addEventListener("click", function() {
+        window.location.href = "groupClassName_book.html";
+    });
+</script>
+
+</body>
+</html>

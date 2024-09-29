@@ -106,13 +106,13 @@
         };
 
         //使用fetch发送登录请求到后端
-        fetch（"/api/login", {
-            method:"POST",
+        fetch("/api/login", {
+            method: "POST",
             headers: {
-                    "Content-Type": "application/json"
-            },
+            "Content-Type": "application/json"
+        },
             body: JSON.stringify(loginData)
-            })
+        })
         .then(response => {
             if (response.ok) {
                 return response.text(); // 如果成功，获取后端返回的信息
@@ -121,10 +121,8 @@
             }
         })
         .then(result => {
-            alert(result); // 登录成功，显示成功信息
-            // Redirect to login page after registration
-            window.location.href = "myPage.html";
-
+            //alert(result); 登录成功，显示成功信息
+            window.location.href = "groupClassType.html";
         })
         .catch(error => {
             document.getElementById("login-alert").style.display = "block"; // 显示错误消息
@@ -133,5 +131,3 @@
 </script>
 </body>
 </html>
-
-

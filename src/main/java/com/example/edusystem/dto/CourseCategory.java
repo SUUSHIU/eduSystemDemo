@@ -15,11 +15,12 @@ public enum CourseCategory {
      * Vip课程
      * 30hour、45hour、60hour、96hour、120hour、
      */
-    vipCourse_1("vip课程30hour"),
-    vipCourse_2("vip课程45hour"),
-    vipCourse_3("vip课程60hour"),
-    vipCourse_4("vip课程96hour"),
-    vipCourse_5("vip课程126hour");
+    vipCourse_0("vip10"),
+    vipCourse_1("vip30"),
+    vipCourse_2("vip45"),
+    vipCourse_3("vip60"),
+    vipCourse_4("vip96"),
+    vipCourse_5("vip126");
 
     String value;
 

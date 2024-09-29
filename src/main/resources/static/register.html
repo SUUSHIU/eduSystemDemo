@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shang Yi Studio - Register</title>
+    <title>student Register</title>
     <style>
         body {
             display: flex;
@@ -90,6 +90,11 @@
 </div>
 
 <script>
+    //逻辑：controller定义一个url -> fetch()获取 -> 判断
+    //获取资源的方法：const response = await fetch(url, options(method,headers,body等属性)) 启动一个请求并返回一个承诺
+    //从响应中以JSON形式获取：const result = await response.json();
+    //检查"response.ok"属性，通过catch(error)来判断HTTP是否在成功范围（200～299）
+
     async function register() {
         var studentNumber = document.getElementById("studentNumber").value;
         var password = document.getElementById("password").value;
@@ -97,27 +102,27 @@
         var courseCategory = document.getElementById("courseCategory").value;
         var courseStartDate = document.getElementById("courseStartDate").value;
 
-
         try {
             const response = await fetch('/api/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                studentNumber,
-                password,
-                name,
-                courseCategory,
-                courseStartDate
-                 })  // 将这里的字段都写上去
+                    studentNumber,
+                    password,
+                    name,
+                    courseCategory,
+                    courseStartDate
+                 })
             });
 
             const result = await response.json();
-            // 检查请求是否成功
+
             if (result.success) {
+
+                // console.log('message')　在控制台输出信息
                 console.log('注册成功');
-                // 可以在这里进行跳转或者弹出提示
+
+                // alert表示一个弹窗，用户需要处理这个信息，代码才能继续往下运行
                 alert('注册成功');
                 window.location.href = "/login.html";
             } else {
@@ -126,8 +131,6 @@
             }
         } catch (error) {
             console.error('请求出错:', error);
-
-
 
         }
     }

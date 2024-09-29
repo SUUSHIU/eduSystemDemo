@@ -2,8 +2,6 @@ package com.example.edusystem.dto;
 
 import jakarta.persistence.*;
 
-import java.rmi.MarshalledObject;
-import java.time.LocalDate;
 import java.util.Map;
 
 
@@ -73,10 +71,12 @@ public class Account {
     public CourseCategory courseCategory;
 
     //已使用时间
-    public Map<String, Double> courseUsedTime;
+    @ElementCollection
+    public Map<String, Double> usedClassHour;
 
     //未使用时间
-    public Map<String, Double> courseUnUsedTime;
+    @ElementCollection
+    public Map<String, Double> restClassHour;
 
     public CourseCategory getCourseCategory() {
         return courseCategory;

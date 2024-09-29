@@ -1,9 +1,19 @@
 package com.example.edusystem.dto;
 
 import jakarta.persistence.*;
+import jakarta.websocket.EncodeException;
 import org.springframework.lang.NonNull;
 
+import java.time.LocalTime;
+import java.time.OffsetTime;
 import java.util.List;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 @Entity
 public class GroupClass {
@@ -62,6 +72,7 @@ public class GroupClass {
      * 表示班课开始的具体时间（如：09:00）
      */
     public String classStartTime;
+
 
     /**
      * 下课时间
@@ -150,9 +161,7 @@ public class GroupClass {
         this.classMode = classMode;
     }
 
-    public String getClassStartDate() {
-        return classStartDate;
-    }
+    public String getClassStartDate() { return classStartDate; }
 
     public void setClassStartDate(String classStartDate) {
         this.classStartDate = classStartDate;
@@ -166,25 +175,15 @@ public class GroupClass {
         this.classStartDateOfWeek = classStartDateOfWeek;
     }
 
-    public String getClassStartTime() {
-        return classStartTime;
-    }
+    public String getClassStartTime() { return classStartTime; }
 
-    public void setClassStartTime(String classStartTime) {
-        this.classStartTime = classStartTime;
-    }
+    public void setClassStartTime(String classStartTime) { this.classStartTime = classStartTime; }
 
-    public String getClassEndTime() {
-        return classEndTime;
-    }
+    public String getClassEndTime() { return classEndTime; }
 
-    public void setClassEndTime(String classEndTime) {
-        this.classEndTime = classEndTime;
-    }
+    public void setClassEndTime(String classEndTime) { this.classEndTime = classEndTime; }
 
-    public String getClassLanguage() {
-        return classLanguage;
-    }
+    public String getClassLanguage() { return classLanguage; }
 
     public void setClassLanguage(String classLanguage) {
         this.classLanguage = classLanguage;
